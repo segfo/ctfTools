@@ -30,6 +30,13 @@ e = ELF("%s")
 pltRead = p32(e.plt["read"])
 
 r = remote("localhost",11111)
+bofPattern = cyclic(2048)
+r.send()
+r.recv()
+#cyclic_find()
+#r.recvall()
+#r.interactive()
+r.close()
 """%(fileName)
 
 gdbServerTemplate = """#!/bin/sh
