@@ -2,6 +2,7 @@
 #coding: utf-8
 import sys
 import os
+import strings
 from pwn import *
 
 def printUsage(module):
@@ -76,3 +77,11 @@ os.chmod("exploit.py",0755)
 if fileName[0:2] == "./":
     fileName = fileName[2:]
 os.chmod(fileName,0755)
+
+stringsTxt = open("strings.txt","w")
+str,maxLen = strings.getStrings(elf.file)
+for s in str:
+    tab = " "*(1+int(math.log10(maxLen))-int(math.log10(s.len)))
+    stringsTxt.write("%x(%d)%s: %s\n"%(s.addr+elf.load_addr,s.len,tab,s.data))
+
+stringsTxt.close()
