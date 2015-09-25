@@ -3,6 +3,7 @@
 import sys
 import os
 import strings
+from operator import attrgetter
 from pwn import *
 
 def printUsage(module):
@@ -78,6 +79,9 @@ os.chmod(fileName,0755)
 
 stringsTxt = open("strings.txt","w")
 str,maxLen = strings.getStrings(elf.file)
+
+# length sort (default : address sort)
+str = sorted(str,key=attrgetter('len'))
 for s in str:
     tab = " "*(1+int(math.log10(maxLen))-int(math.log10(s.len)))
     stringsTxt.write("%x(%d)%s: %s\n"%(s.addr+elf.load_addr,s.len,tab,s.data))
