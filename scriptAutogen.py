@@ -45,8 +45,8 @@ runGdbTempleate = """
 gdb -x ./gdbCmd %s
 """%(fileName)
 
-runGdbSvrTemplate = """
-socat tcp-l:11111,reuseaddr,fork exec:./gdbserver
+runGdbSvrTemplate = """#!/bin/sh
+socat tcp-l:11111,reuseaddr,fork exec:./gdbServer
 """
 
 gdbCmd = open("gdbCmd","w")
@@ -62,7 +62,7 @@ pwnPy.close()
 runGdb = open("gdbRun","w")
 runGdbSvr = open("gdbServerRun","w")
 runGdb.write(runGdbTempleate)
-runGdbSvr.write(gdbServerTemplate)
+runGdbSvr.write(runGdbSvrTemplate)
 runGdb.close()
 runGdbSvr.close()
 
