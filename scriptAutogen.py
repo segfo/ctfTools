@@ -22,8 +22,7 @@ except:
 
 fileName = argv[1]
 
-pwnPyTemplate = """
-#!/usr/bin/python
+pwnPyTemplate = """#!/usr/bin/python
 from pwn import *
 
 e = ELF("%s")
@@ -32,8 +31,7 @@ pltRead = p32(e.plt["read"])
 r = remote("localhost",11111)
 """%(fileName)
 
-gdbServerTemplate = """
-#!/bin/sh
+gdbServerTemplate = """#!/bin/sh
 gdbserver localhost:22222 %s
 """%(fileName)
 
