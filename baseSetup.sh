@@ -13,6 +13,9 @@ sudo chmod +x rp-lin-x64
 sudo mv rp-lin-x64 /usr/local/bin
 echo "alias rp++='rp-lin-x64 -r 3 -f'">> ~/.bash_aliases
 echo "alias less='less -R'">> ~/.bash_aliases
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386
 
 # last
 LANG=C xdg-user-dirs-gtk-update
