@@ -15,20 +15,19 @@ elf = None
 if argc < 2:
     printUsage(argv[0])
     exit(1)
-try:
-    elf = ELF(argv[1])
-except:
-    print "\"%s\"file not found."%(argv[1])
-    exit(1)
 
 fileName = argv[1]
+
+try:
+	elf = ELF(fileName)
+except:
+	print "%s file not found."%fileName
+	exit(0)
 
 pwnPyTemplate = """#!/usr/bin/python
 from pwn import *
 
-e = ELF("%s")
-pltRead = p32(e.plt["read"])
-
+e = ELF("%s");
 r = remote("localhost",11111)
 bofPattern = cyclic(2048)
 r.send()
@@ -43,11 +42,9 @@ gdbServerTemplate = """#!/bin/sh
 gdbserver localhost:22222 %s
 """%(fileName)
 
-gdbCmdTemplate = """
-target remote localhost:22222
-b *0x%x
-c
-"""%(elf.start)
+gdbCmdTemplate = """target remote localhost:22222
+start
+"""
 
 runGdbTempleate = """
 gdb -x ./gdbCmd %s
