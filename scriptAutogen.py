@@ -43,7 +43,12 @@ gdbserver localhost:22222 %s
 """%(fileName)
 
 gdbCmdTemplate = """target remote localhost:22222
-start
+si
+ni
+b __libc_start_main
+c
+b *($rdi)
+c
 """
 
 runGdbTempleate = """
