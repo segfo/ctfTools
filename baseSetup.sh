@@ -5,7 +5,7 @@ sudo apt-get update -y
 sudo apt-get install -y vim
 # sudo authentication not require.
 LANG=C xdg-user-dirs-gtk-update
-sudo update-alternatives --config editor
+sudo update-alternatives --set editor /usr/bin/vim.basic
 sudo visudo
 # required modules.
 sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386
@@ -18,12 +18,8 @@ sudo apt-get install -y clang gdbserver
 sudo apt-get install -y virtualenvwrapper
 # bash enable mkvirtualenv
 echo "source /etc/bash_completion.d/virtualenvwrapper" >> ~/.bashrc
-# enable mkvirtualenv
-source /etc/bash_completion.d/virtualenvwrapper
 # angr / pwntools
-mkvirtualenv ctf
-pip install --upgrade pwntools
-pip install --upgrade angr
+pip3 install --upgrade pwntools
 # etc
 git clone https://github.com/longld/peda.git ~/.peda
 echo "source ~/.peda/peda.py" >> ~/.gdbinit

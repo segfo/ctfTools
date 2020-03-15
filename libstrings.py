@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #coding: utf-8
 
 import string
@@ -16,12 +16,13 @@ def getStrings(file, min=4):
     maxLen = 0
     for c in f.read():
         cnt += 1
+        c = chr(c)
         if c in string.printable:
             if c == '\n':
                 result += "\\n"
             else:
                 result += c
-            continue
+                continue
         if len(result) >= min:
             resultData.append(stringsData(cnt-len(result)-1,len(result),result))
             if maxLen < len(result):

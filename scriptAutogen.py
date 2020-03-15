@@ -1,13 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #coding: utf-8
 import sys
 import os
-import strings
+import libstrings
 from operator import attrgetter
 from pwn import *
 
 def printUsage(module):
-    print   "%s <elfFile>"%(module)
+    print("%s <elfFile>"%(module))
 
 argv = sys.argv
 argc = len(argv)
@@ -21,10 +21,10 @@ fileName = argv[1]
 try:
 	elf = ELF(fileName)
 except:
-	print "%s file not found."%fileName
+	print("%s file not found."%fileName)
 	exit(0)
 
-pwnPyTemplate = """#!/usr/bin/python
+pwnPyTemplate = """#!/usr/bin/python3
 from pwn import *
 
 e = ELF("%s");
@@ -51,11 +51,11 @@ gdb -x ./gdbCmd %s
 """%(fileName)
 
 runGdbSvrTemplate = """#!/bin/sh
-socat tcp-l:11111,reuseaddr,fork exec:./gdbServer
+socat tcp-l:11111,reuseaddr,fork exec:./__gdbServer
 """
 
 gdbCmd = open("gdbCmd","w")
-gdbserver = open("gdbServer","w")
+gdbserver = open("__gdbServer","w")
 pwnPy = open("exploit.py","w")
 gdbCmd.write(gdbCmdTemplate)
 gdbserver.write(gdbServerTemplate)
@@ -64,25 +64,25 @@ gdbCmd.close()
 gdbserver.close()
 pwnPy.close()
 
-runGdb = open("gdbRun","w")
-runGdbSvr = open("gdbServerRun","w")
+runGdb = open("runGdb.sh","w")
+runGdbSvr = open("runGdbServer.sh","w")
 runGdb.write(runGdbTempleate)
 runGdbSvr.write(runGdbSvrTemplate)
 runGdb.close()
 runGdbSvr.close()
 
 #chmod
-os.chmod("gdbServer",0755)
-os.chmod("gdbServerRun",0755)
-os.chmod("gdbRun",0755)
-os.chmod("exploit.py",0755)
+os.chmod("__gdbServer",0o755)
+os.chmod("runGdbServer.sh",0o755)
+os.chmod("runGdb.sh",0o755)
+os.chmod("exploit.py",0o755)
 
 if fileName[0:2] == "./":
     fileName = fileName[2:]
-os.chmod(fileName,0755)
+os.chmod(fileName,0o755)
 
 stringsTxt = open("strings.txt","w")
-str,maxLen = strings.getStrings(elf.file)
+str,maxLen = libstrings.getStrings(elf.file)
 
 # length sort (default : address sort)
 str = sorted(str,key=attrgetter('len'))
