@@ -32,6 +32,10 @@ r = remote("localhost",11111)
 bofPattern = cyclic(2048)
 r.send()
 r.recv()
+# wait recvuntil
+r.recvuntil("1337 input:")
+# wait lines
+line=r.recvlines(2)
 #cyclic_find()
 #r.recvall()
 #r.interactive()
